@@ -239,10 +239,19 @@ button:hover {
 }
 
 .email-preview .via,
-.email-preview .re-line {
+.email-preview .re-line,
+.email-preview .logline-label {
   font-weight: 700;
+}
+
+.email-preview .via,
+.email-preview .re-line {
   font-style: italic;
   text-decoration: underline;
+}
+
+.email-preview .logline-text {
+  font-style: italic;
 }
 
 .email-preview .link {

@@ -18,6 +18,13 @@
             <button class="ghost-button" type="button" id="clearButton">Clear</button>
           </div>
 
+          <label>
+            <span>Project Preset</span>
+            <select id="templateProject">
+              <option value="">Custom project</option>
+            </select>
+          </label>
+
           <div class="field-grid">
             <label>
               <span>Project</span>
@@ -49,6 +56,14 @@
               <select id="conversation">
                 <option value="our conversation">our conversation</option>
                 <option value="your conversation with">your conversation with...</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Submission Type</span>
+              <select id="submissionType">
+                <option value="exclusive">exclusive</option>
+                <option value="non-exclusive">non-exclusive</option>
               </select>
             </label>
           </div>
@@ -111,6 +126,7 @@
       </section>
     </main>
 
+    <script src="presets.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

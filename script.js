@@ -1,11 +1,14 @@
 const form = document.querySelector("#submissionForm");
+const presets = window.SUBMISSION_PRESETS || [];
 const fields = {
+  templateProject: document.querySelector("#templateProject"),
   project: document.querySelector("#project"),
   writer: document.querySelector("#writer"),
   agent: document.querySelector("#agent"),
   submittedTo: document.querySelector("#submittedTo"),
   date: document.querySelector("#date"),
   conversation: document.querySelector("#conversation"),
+  submissionType: document.querySelector("#submissionType"),
   conversationName: document.querySelector("#conversationName"),
   materials: document.querySelector("#materials"),
   logline: document.querySelector("#logline"),
@@ -50,18 +53,29 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
+function multilineHtml(value) {
+  return escapeHtml(value).replaceAll("\n", "<br>");
+}
+
+function uppercaseProject(value) {
+  return titleCasePlaceholder(value, "[Project Name]").toUpperCase();
+}
+
 function getDelivery() {
   return document.querySelector("input[name='delivery']:checked").value;
 }
 
 function buildDraft() {
-  const project = titleCasePlaceholder(fields.project.value, "[Project Name]");
+  const project = uppercaseProject(fields.project.value);
   const writer = titleCasePlaceholder(fields.writer.value, "[Writer Name]");
   const agent = titleCasePlaceholder(fields.agent.value, "[Agent Name]");
   const submittedTo = titleCasePlaceholder(fields.submittedTo.value, writer);
   const date = formatDate(fields.date.value) || "[Date]";
   const materials = titleCasePlaceholder(fields.materials.value, "materials");
   const logline = titleCasePlaceholder(fields.logline.value, "[Logline]");
+  const submissionType = fields.submissionType.value;
+  const submissionArticle = submissionType === "exclusive" ? "an" : "a";
+  const submissionLine = `This is ${submissionArticle} ${submissionType} submission.`;
   const delivery = getDelivery();
   const link = fields.link.value.trim();
   const conversation =
@@ -86,7 +100,9 @@ function buildDraft() {
     "",
     intro,
     "",
-    logline
+    submissionLine,
+    "",
+    `Logline: ${logline}`
   ];
 
   if (deliveryLine) {
@@ -99,17 +115,43 @@ function buildDraft() {
     subject,
     body: bodyParts.join("\n"),
     html: `
-      <p class="via">VIA EMAIL</p>
+      <p class="via" style="font-weight: 700; font-style: italic; text-decoration: underline;">VIA EMAIL</p>
       <p>${escapeHtml(date)}</p>
       <p>${escapeHtml(submittedTo)}</p>
-      <p class="re-line">RE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${escapeHtml(project)}</p>
+      <p class="re-line" style="font-weight: 700; font-style: italic; text-decoration: underline;">RE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${escapeHtml(project)}</p>
       <p>Dear ${escapeHtml(agent)},</p>
       <p>${escapeHtml(intro)}</p>
-      <p>${escapeHtml(logline)}</p>
-      ${deliveryLine ? `<p class="link">${escapeHtml(deliveryLine)}</p>` : ""}
+      <p>${escapeHtml(submissionLine)}</p>
+      <p><span class="logline-label" style="font-weight: 700;">Logline:</span> <span class="logline-text" style="font-style: italic;">${multilineHtml(logline)}</span></p>
+      ${deliveryLine ? `<p class="link" style="color: #467886; text-decoration: underline;">${escapeHtml(deliveryLine)}</p>` : ""}
       <p>We look forward to hearing your thoughts!</p>
     `
   };
+}
+
+function populatePresetOptions() {
+  presets.forEach((preset, index) => {
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = preset.project;
+    fields.templateProject.append(option);
+  });
+}
+
+function setDelivery(value) {
+  const delivery = document.querySelector(`input[name='delivery'][value='${value}']`);
+  if (delivery) delivery.checked = true;
+}
+
+function applyPreset(index) {
+  const preset = presets[Number(index)];
+  if (!preset) return;
+
+  fields.project.value = preset.project || "";
+  fields.logline.value = preset.logline || "";
+  fields.materials.value = preset.materials || "";
+  fields.link.value = preset.link || "";
+  setDelivery(preset.link ? "link" : "attachment");
 }
 
 function saveState() {
@@ -172,8 +214,7 @@ function restoreState() {
       if (data[key] !== undefined) field.value = data[key];
     });
     if (data.delivery) {
-      const delivery = document.querySelector(`input[name='delivery'][value='${data.delivery}']`);
-      if (delivery) delivery.checked = true;
+      setDelivery(data.delivery);
     }
   } catch {
     localStorage.removeItem(storageKey);
@@ -182,6 +223,13 @@ function restoreState() {
 
 form.addEventListener("input", render);
 form.addEventListener("change", render);
+
+fields.templateProject.addEventListener("change", () => {
+  if (fields.templateProject.value !== "") {
+    applyPreset(fields.templateProject.value);
+  }
+  render();
+});
 
 document.querySelector("#copySubject").addEventListener("click", () => {
   copyText(subjectOutput.textContent, "Subject");
@@ -198,5 +246,6 @@ document.querySelector("#clearButton").addEventListener("click", () => {
   render();
 });
 
+populatePresetOptions();
 restoreState();
 render();
