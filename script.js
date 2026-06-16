@@ -1,5 +1,7 @@
 const form = document.querySelector("#submissionForm");
-const presets = window.SUBMISSION_PRESETS || [];
+const presets = [...(window.SUBMISSION_PRESETS || [])].sort((a, b) =>
+  a.project.localeCompare(b.project, undefined, { sensitivity: "base" })
+);
 const fields = {
   templateProject: document.querySelector("#templateProject"),
   project: document.querySelector("#project"),
@@ -22,7 +24,8 @@ const emailPreview = document.querySelector("#emailPreview");
 const plainOutput = document.querySelector("#plainOutput");
 const copyStatus = document.querySelector("#copyStatus");
 
-const storageKey = "submission-email-formatter";
+const storageKey = "submission-email-formatter-v2";
+const oldStorageKey = "submission-email-formatter";
 
 function todayValue() {
   const now = new Date();
@@ -204,6 +207,7 @@ async function copyBody() {
 }
 
 function restoreState() {
+  localStorage.removeItem(oldStorageKey);
   fields.date.value = todayValue();
   const saved = localStorage.getItem(storageKey);
   if (!saved) return;
@@ -211,8 +215,9 @@ function restoreState() {
   try {
     const data = JSON.parse(saved);
     Object.entries(fields).forEach(([key, field]) => {
-      if (data[key] !== undefined) field.value = data[key];
+      if (key !== "date" && data[key] !== undefined) field.value = data[key];
     });
+    fields.date.value = todayValue();
     if (data.delivery) {
       setDelivery(data.delivery);
     }

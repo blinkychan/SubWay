@@ -1,11 +1,5 @@
 window.SUBMISSION_PRESETS = [
   {
-    "project": "Pursuit",
-    "logline": "Thirteen bodies are found in a Louisville restaurant. When the police can find no suspect or motive, a victim\u2019s family seeks the services of the enigmatic and solitary specialist Roy Prescott, known for his ability to find people who don\u2019t want to be found. Working outside the law and willing to do what the police can\u2019t, Prescott hunts the killer, an elusive adversary who is as smart, as methodical, as deadly as he is. The only way to conduct this pursuit is to goad the killer into believing that he must kill Roy Prescott. It is a contest fought from one end of the country to the other, and both men understand that when it\u2019s over, only one of them will be alive.",
-    "link": "https://drive.google.com/file/d/1Idym8CUqX6UyytedG4m1GSGr_gYjIH54/view?usp=sharing",
-    "materials": "the manuscript"
-  },
-  {
     "project": "Allegra Black",
     "logline": "When a bestselling horror novelist returns to her fog-shrouded hometown, she partners with a skeptical detective.  As sparks begin to fly, the two solve bizarre crimes that mirror the supernatural phenomena from her books\u2014only to discover that her darkest creation, The Woman In Black, may be clawing her way from imagination into reality.",
     "link": "",
@@ -18,14 +12,14 @@ window.SUBMISSION_PRESETS = [
     "materials": ""
   },
   {
-    "project": "Cockeyed",
-    "logline": "The project is a romcom based on Ryan Knighton's memoir about losing his vision in college, and the love triangle between his roommate, who was deaf, and the woman who ultimately became his wife.",
-    "link": "",
-    "materials": ""
+    "project": "Carpe Diem",
+    "logline": "In this two-hander light procedural, 48 year-old Tom Villeneuve is exonerated after 17 years in prison for a crime he didn't commit. Now a lawyer, he opens a practice defending the wrongfully accused, all while attempting to prove his own innocence.",
+    "link": "https://www.youtube.com/watch?v=cMgJ2MjhcnY",
+    "materials": "the teaser link"
   },
   {
-    "project": "Whereabouts Unknown",
-    "logline": "WHEREABOUTS UNKNOWN follows ELLEN WHITE, a private investigator as she runs a school for burgeoning PIs and solves crimes with her crack team of misfit trainees \u2013 all while trying to hold her own family together. \n\nBased on the real life experiences of Toronto-based private investigator Ellen White",
+    "project": "Cockeyed",
+    "logline": "The project is a romcom based on Ryan Knighton's memoir about losing his vision in college, and the love triangle between his roommate, who was deaf, and the woman who ultimately became his wife.",
     "link": "",
     "materials": ""
   },
@@ -60,14 +54,20 @@ window.SUBMISSION_PRESETS = [
     "materials": ""
   },
   {
-    "project": "Small Town Narcos",
-    "logline": "In 1989, a turncoat smuggler lures Pablo Escobar into running half a ton of cocaine through the poorest town in New Brunswick, sparking a botched RCMP sting, a cartel jailbreak plot, and one of the strangest true crime sagas in Canadian history.",
-    "link": "",
-    "materials": ""
+    "project": "Pursuit",
+    "logline": "Thirteen bodies are found in a Louisville restaurant. When the police can find no suspect or motive, a victim\u2019s family seeks the services of the enigmatic and solitary specialist Roy Prescott, known for his ability to find people who don\u2019t want to be found. Working outside the law and willing to do what the police can\u2019t, Prescott hunts the killer, an elusive adversary who is as smart, as methodical, as deadly as he is. The only way to conduct this pursuit is to goad the killer into believing that he must kill Roy Prescott. It is a contest fought from one end of the country to the other, and both men understand that when it\u2019s over, only one of them will be alive.",
+    "link": "https://drive.google.com/file/d/1Idym8CUqX6UyytedG4m1GSGr_gYjIH54/view?usp=sharing",
+    "materials": "the manuscript"
   },
   {
     "project": "Repo Cohen",
     "logline": "A disgraced Detroit cop rebuilds his life as an LA repo man, recovering everything from cars to lost dignity while fighting to reconnect with his son.",
+    "link": "",
+    "materials": ""
+  },
+  {
+    "project": "Small Town Narcos",
+    "logline": "In 1989, a turncoat smuggler lures Pablo Escobar into running half a ton of cocaine through the poorest town in New Brunswick, sparking a botched RCMP sting, a cartel jailbreak plot, and one of the strangest true crime sagas in Canadian history.",
     "link": "",
     "materials": ""
   },
@@ -90,9 +90,9 @@ window.SUBMISSION_PRESETS = [
     "materials": ""
   },
   {
-    "project": "Carpe Diem",
-    "logline": "In this two-hander light procedural, 48 year-old Tom Villeneuve is exonerated after 17 years in prison for a crime he didn't commit. Now a lawyer, he opens a practice defending the wrongfully accused, all while attempting to prove his own innocence.",
-    "link": "https://www.youtube.com/watch?v=cMgJ2MjhcnY",
-    "materials": "the teaser link"
+    "project": "Whereabouts Unknown",
+    "logline": "WHEREABOUTS UNKNOWN follows ELLEN WHITE, a private investigator as she runs a school for burgeoning PIs and solves crimes with her crack team of misfit trainees \u2013 all while trying to hold her own family together. \n\nBased on the real life experiences of Toronto-based private investigator Ellen White",
+    "link": "",
+    "materials": ""
   }
 ];
