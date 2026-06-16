@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Submission Email Formatter</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="Submission email formatter">
+        <form class="panel form-panel" id="submissionForm">
+          <div class="topline">
+            <div>
+              <p class="eyebrow">Submission formatter</p>
+              <h1>Email draft builder</h1>
+            </div>
+            <button class="ghost-button" type="button" id="clearButton">Clear</button>
+          </div>
+
+          <div class="field-grid">
+            <label>
+              <span>Project</span>
+              <input id="project" type="text" placeholder="CARPE DIEM" autocomplete="off">
+            </label>
+
+            <label>
+              <span>Writer</span>
+              <input id="writer" type="text" placeholder="Michael Rauch" autocomplete="off">
+            </label>
+
+            <label>
+              <span>Agent</span>
+              <input id="agent" type="text" placeholder="Jonathan" autocomplete="off">
+            </label>
+
+            <label>
+              <span>Submitted To</span>
+              <input id="submittedTo" type="text" placeholder="Michael Rauch" autocomplete="off">
+            </label>
+
+            <label>
+              <span>Date</span>
+              <input id="date" type="date">
+            </label>
+
+            <label>
+              <span>Conversation</span>
+              <select id="conversation">
+                <option value="our conversation">our conversation</option>
+                <option value="your conversation with">your conversation with...</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="conditional-name" id="conversationNameWrap">
+            <span>Conversation With</span>
+            <input id="conversationName" type="text" placeholder="Lindsay" autocomplete="off">
+          </label>
+
+          <label>
+            <span>Intro Materials</span>
+            <textarea id="materials" rows="3" placeholder="materials"></textarea>
+          </label>
+
+          <label>
+            <span>Logline</span>
+            <textarea id="logline" rows="5" placeholder="A short logline or paragraph..."></textarea>
+          </label>
+
+          <fieldset class="mode-group">
+            <legend>Delivery</legend>
+            <label>
+              <input type="radio" name="delivery" value="attachment" checked>
+              <span>Attachment</span>
+            </label>
+            <label>
+              <input type="radio" name="delivery" value="link">
+              <span>Link</span>
+            </label>
+          </fieldset>
+
+          <label class="link-field" id="linkWrap">
+            <span>Link</span>
+            <input id="link" type="url" placeholder="https://..." autocomplete="off">
+          </label>
+        </form>
+
+        <section class="panel output-panel" aria-label="Generated email">
+          <div class="topline output-topline">
+            <div>
+              <p class="eyebrow">Generated draft</p>
+              <h2>Ready to paste</h2>
+            </div>
+            <div class="actions">
+              <button type="button" id="copySubject">Copy subject</button>
+              <button type="button" id="copyBody">Copy body</button>
+            </div>
+          </div>
+
+          <div class="subject-row">
+            <span>Subject</span>
+            <output id="subjectOutput"></output>
+          </div>
+
+          <article class="email-preview" id="emailPreview"></article>
+
+          <textarea id="plainOutput" aria-label="Plain text email body" readonly></textarea>
+          <p class="copy-status" id="copyStatus" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
