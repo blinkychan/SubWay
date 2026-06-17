@@ -212,6 +212,12 @@ function openEmailDraft() {
   window.location.href = `mailto:?subject=${subject}&body=${body}`;
 }
 
+function openOutlookDraft() {
+  const subject = encodeURIComponent(subjectOutput.textContent);
+  const body = encodeURIComponent(plainOutput.value);
+  window.location.href = `ms-outlook://compose?subject=${subject}&body=${body}`;
+}
+
 function restoreState() {
   localStorage.removeItem(oldStorageKey);
   fields.date.value = todayValue();
@@ -252,6 +258,10 @@ document.querySelector("#copyBody").addEventListener("click", () => {
 
 document.querySelector("#openEmail").addEventListener("click", () => {
   openEmailDraft();
+});
+
+document.querySelector("#openOutlook").addEventListener("click", () => {
+  openOutlookDraft();
 });
 
 document.querySelector("#clearButton").addEventListener("click", () => {
