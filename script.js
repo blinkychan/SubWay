@@ -206,6 +206,12 @@ async function copyBody() {
   }, 1800);
 }
 
+function openEmailDraft() {
+  const subject = encodeURIComponent(subjectOutput.textContent);
+  const body = encodeURIComponent(plainOutput.value);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
+
 function restoreState() {
   localStorage.removeItem(oldStorageKey);
   fields.date.value = todayValue();
@@ -242,6 +248,10 @@ document.querySelector("#copySubject").addEventListener("click", () => {
 
 document.querySelector("#copyBody").addEventListener("click", () => {
   copyBody();
+});
+
+document.querySelector("#openEmail").addEventListener("click", () => {
+  openEmailDraft();
 });
 
 document.querySelector("#clearButton").addEventListener("click", () => {
