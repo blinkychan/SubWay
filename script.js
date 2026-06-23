@@ -7,7 +7,6 @@ const fields = {
   project: document.querySelector("#project"),
   writer: document.querySelector("#writer"),
   agent: document.querySelector("#agent"),
-  submittedTo: document.querySelector("#submittedTo"),
   date: document.querySelector("#date"),
   conversation: document.querySelector("#conversation"),
   submissionType: document.querySelector("#submissionType"),
@@ -70,15 +69,16 @@ function getDelivery() {
 
 function buildDraft() {
   const project = uppercaseProject(fields.project.value);
-  const writer = titleCasePlaceholder(fields.writer.value, "[Writer Name]");
+  const writer = fields.writer.value.trim();
+  const writerForSubject = writer || "[Writer Name]";
   const agent = titleCasePlaceholder(fields.agent.value, "[Agent Name]");
-  const submittedTo = titleCasePlaceholder(fields.submittedTo.value, writer);
   const date = formatDate(fields.date.value) || "[Date]";
   const materials = titleCasePlaceholder(fields.materials.value, "materials");
   const logline = titleCasePlaceholder(fields.logline.value, "[Logline]");
   const submissionType = fields.submissionType.value;
   const submissionArticle = submissionType === "exclusive" ? "an" : "a";
-  const submissionLine = `This is ${submissionArticle} ${submissionType} submission.`;
+  const submissionLine =
+    submissionType === "na" ? "" : `This is ${submissionArticle} ${submissionType} submission.`;
   const delivery = getDelivery();
   const link = fields.link.value.trim();
   const conversation =
@@ -86,8 +86,12 @@ function buildDraft() {
       ? `your conversation with ${titleCasePlaceholder(fields.conversationName.value, "[Name]")}`
       : "our conversation";
 
-  const subject = `SUBMISSION // ${project} - ${writer}`;
-  const intro = `Per ${conversation}, attached please find ${materials} for ${project} for ${writer} to review.`;
+  const reLine = writer ? `RE:      ${project} - ${writer}` : `RE:      ${project}`;
+  const reLineHtml = writer
+    ? `RE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${escapeHtml(project)} - ${escapeHtml(writer)}`
+    : `RE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${escapeHtml(project)}`;
+  const subject = `SUBMISSION // ${project} - ${writerForSubject}`;
+  const intro = `Per ${conversation}, attached please find ${materials} for ${project} for ${writerForSubject} to review.`;
   const deliveryLine = delivery === "link" ? link || "[Link]" : "";
 
   const bodyParts = [
@@ -95,18 +99,18 @@ function buildDraft() {
     "",
     date,
     "",
-    submittedTo,
-    "",
-    `RE:      ${project}`,
+    reLine,
     "",
     `Dear ${agent},`,
     "",
-    intro,
-    "",
-    submissionLine,
-    "",
-    `Logline: ${logline}`
+    intro
   ];
+
+  if (submissionLine) {
+    bodyParts.push("", submissionLine);
+  }
+
+  bodyParts.push("", `Logline: ${logline}`);
 
   if (deliveryLine) {
     bodyParts.push("", deliveryLine);
@@ -120,11 +124,10 @@ function buildDraft() {
     html: `
       <p class="via" style="font-weight: 700; font-style: italic; text-decoration: underline;">VIA EMAIL</p>
       <p>${escapeHtml(date)}</p>
-      <p>${escapeHtml(submittedTo)}</p>
-      <p class="re-line" style="font-weight: 700; font-style: italic; text-decoration: underline;">RE:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${escapeHtml(project)}</p>
+      <p class="re-line" style="font-weight: 700; font-style: italic; text-decoration: underline;">${reLineHtml}</p>
       <p>Dear ${escapeHtml(agent)},</p>
       <p>${escapeHtml(intro)}</p>
-      <p>${escapeHtml(submissionLine)}</p>
+      ${submissionLine ? `<p>${escapeHtml(submissionLine)}</p>` : ""}
       <p><span class="logline-label" style="font-weight: 700;">Logline:</span> <span class="logline-text" style="font-style: italic;">${multilineHtml(logline)}</span></p>
       ${deliveryLine ? `<p class="link" style="color: #467886; text-decoration: underline;">${escapeHtml(deliveryLine)}</p>` : ""}
       <p>We look forward to hearing your thoughts!</p>
