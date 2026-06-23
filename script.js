@@ -25,6 +25,7 @@ const copyStatus = document.querySelector("#copyStatus");
 
 const storageKey = "submission-email-formatter-v2";
 const oldStorageKey = "submission-email-formatter";
+const maxEmailUrlLength = 1800;
 
 function todayValue() {
   const now = new Date();
@@ -169,6 +170,7 @@ function saveState() {
 function render() {
   conversationNameWrap.classList.toggle("is-visible", fields.conversation.value === "your conversation with");
   linkWrap.classList.toggle("is-visible", getDelivery() === "link");
+  copyStatus.textContent = "";
 
   const draft = buildDraft();
   subjectOutput.textContent = draft.subject;
@@ -209,16 +211,35 @@ async function copyBody() {
   }, 1800);
 }
 
-function openEmailDraft() {
+function emailUrlBody() {
   const subject = encodeURIComponent(subjectOutput.textContent);
   const body = encodeURIComponent(plainOutput.value);
-  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  return { subject, body };
 }
 
-function openOutlookDraft() {
-  const subject = encodeURIComponent(subjectOutput.textContent);
-  const body = encodeURIComponent(plainOutput.value);
-  window.location.href = `ms-outlook://compose?subject=${subject}&body=${body}`;
+async function copyBodyBeforeExport() {
+  try {
+    await copyBody();
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function openEmailDraft() {
+  await copyBodyBeforeExport();
+  const { subject, body } = emailUrlBody();
+  const fullUrl = `mailto:?subject=${subject}&body=${body}`;
+  const url = fullUrl.length > maxEmailUrlLength ? `mailto:?subject=${subject}` : fullUrl;
+  window.location.href = url;
+}
+
+async function openOutlookDraft() {
+  await copyBodyBeforeExport();
+  const { subject, body } = emailUrlBody();
+  const fullUrl = `ms-outlook://compose?subject=${subject}&body=${body}`;
+  const url = fullUrl.length > maxEmailUrlLength ? `ms-outlook://compose?subject=${subject}` : fullUrl;
+  window.location.href = url;
 }
 
 function restoreState() {
